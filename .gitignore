@@ -60,10 +60,6 @@ typings/
 # next.js build output
 .next
 
-dist/
-
-.cache
-dist
 example/cypress/videos
 example/cypress/screenshots
 
