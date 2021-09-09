@@ -235,7 +235,7 @@ const ENCODING_TO_BLOB_GETTER = {
   [ENCODING.UTF16LE]: fileContent => Cypress.Promise.resolve(fileContent),
   [ENCODING.UTF_16LE]: fileContent => Cypress.Promise.resolve(fileContent)
 };
-function getFileBlobAsync(fileName, simulatedFilePath = null, fileContent, mimeType, encoding, window, lastModified) {
+function getFileBlobAsync(fileName, fileContent, mimeType, encoding, window, lastModified, simulatedFilePath = null) {
   const getBlob = ENCODING_TO_BLOB_GETTER[encoding];
   return getBlob(fileContent, mimeType).then(blob => {
     let blobContent = blob; // https://github.com/abramenal/cypress-file-upload/issues/175
@@ -459,8 +459,8 @@ function resolveFile(fixture, window, simulatedFilePath = null) {
     mimeType: fileMimeType,
     encoding: fileEncoding,
     lastModified: fileLastModified,
-    simulatedFilePath,
-    window
+    window,
+    simulatedFilePath
   })).then(resolve));
 }
 
