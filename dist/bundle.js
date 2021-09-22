@@ -251,7 +251,10 @@ function getFileBlobAsync(fileName, fileContent, mimeType, encoding, window, las
     });
 
     if (simulatedFilePath) {
-      file.path = simulatedFilePath;
+      Object.defineProperty(file, 'path', {
+        get: () => simulatedFilePath,
+        set: () => {}
+      });
     }
 
     return file;
@@ -640,8 +643,6 @@ function attachFile(subject, fixtureOrFixtureArray, processingOptions) {
   Cypress.cy.window({
     log: false
   }).then(window => {
-    console.log('windowFileDebug');
-    console.log(window.File);
     const forceValue = force || getForceValue(subject);
     Cypress.Promise.all(fixtures.map((f, index) => resolveFile(f, window, simulatedFilePath[index]))) // resolve files
     .then(files => files.filter(f => validateFile(f, allowEmpty))) // error if any of the file contents are invalid
